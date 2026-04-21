@@ -1,0 +1,43 @@
+Fetching calendar...
+Creds valid: True
+Creds expired: False
+ERROR OCCURRED:
+Traceback (most recent call last):
+  File "D:\omni-copilot\venv\Lib\site-packages\httplib2\__init__.py", line 1369, in _conn_request
+    conn.connect()
+  File "D:\omni-copilot\venv\Lib\site-packages\httplib2\__init__.py", line 1159, in connect
+    sock.connect((self.host, self.port))
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\omni-copilot\debug_calendar.py", line 13, in <module>
+    res = list_calendar_events()
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\omni-copilot\backend\auth\google_auth.py", line 258, in list_calendar_events
+    orderBy='startTime').execute()
+                         ^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\googleapiclient\http.py", line 923, in execute
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\googleapiclient\http.py", line 222, in _retry_request
+    raise exception
+  File "D:\omni-copilot\venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\google_auth_httplib2.py", line 218, in request
+    response, content = self.http.request(
+                        ^^^^^^^^^^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\httplib2\__init__.py", line 1727, in request
+    (response, content) = self._request(
+                          ^^^^^^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\httplib2\__init__.py", line 1447, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\omni-copilot\venv\Lib\site-packages\httplib2\__init__.py", line 1376, in _conn_request
+    raise ServerNotFoundError("Unable to find the server at %s" % conn.host)
+httplib2.error.ServerNotFoundError: Unable to find the server at www.googleapis.com
