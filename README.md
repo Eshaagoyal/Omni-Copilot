@@ -35,24 +35,124 @@ All powered by **Llama 3.1 via Groq** with **LangChain tool orchestration** — 
 | 🖥️ **Web UI** | Clean JavaScript/CSS frontend to interact with your copilot |
 
 ---
+---
 
-## 📁 Project Structure
-Omni-Copilot/
-├── backend/
-│   ├── auth/
-│   │   └── google_auth.py       # Gmail, Drive, Calendar OAuth + API calls
-│   ├── orchestrator.py          # LangChain agent + tool definitions
-│   └── main.py                  # FastAPI app entry point
-├── frontend/
-│   ├── index.html               # Chat UI
-│   ├── style.css                # Styling
-│   └── app.js                   # Frontend logic
-├── docs/                        # Setup guides and documentation
-├── scripts/                     # Utility and setup scripts
-├── config/
-│   ├── .env                     # API keys (gitignored)
-│   └── tokens/                  # Encrypted OAuth tokens (gitignored)
-├── requirements.txt
-├── test_groq.py                 # LangChain + Groq integration test
-├── test_gmail.py                # Gmail API integration test
-└── .gitignore
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python **3.9+**
+- A [**Groq API key**](https://console.groq.com/) (free tier available)
+- A **Google Cloud project** with OAuth 2.0 credentials
+- A **Notion** integration token (optional)
+
+---
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Eshaagoyal/Omni-Copilot.git
+cd Omni-Copilot
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# macOS / Linux
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure Environment Variables
+
+Create a `config/.env` file:
+
+```env
+# Groq LLM
+GROQ_API_KEY=your_groq_api_key_here
+
+# Token encryption
+# Generate with: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+TOKEN_ENCRYPTION_KEY=your_fernet_key_here
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Notion (optional)
+NOTION_TOKEN=your_notion_integration_token
+```
+
+### 5. Set Up Google OAuth
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project → **APIs & Services** → **Credentials**
+3. Create **OAuth 2.0 Client ID** (Desktop app)
+4. Enable the following APIs:
+   - Gmail API
+   - Google Drive API
+   - Google Calendar API
+5. Download the credentials and place them in `config/`
+
+### 6. Run the Backend
+
+```bash
+cd backend
+uvicorn main:app --reload --port 8000
+```
+
+### 7. Open the Frontend
+
+```bash
+cd frontend
+python -m http.server 3000
+# Navigate to http://localhost:3000
+```
+
+---
+
+## 🔧 Testing Individual Integrations
+
+**Test Groq + LangChain tool calling:**
+```bash
+python test_groq.py
+```
+
+**Test Gmail API connection:**
+```bash
+python test_gmail.py
+# Output saved to gmail_test.txt
+```
+
+---
+
+## 📡 API Reference
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/chat` | Send a natural language query to the AI |
+| `GET` | `/auth/google` | Initiate Google OAuth flow |
+| `GET` | `/auth/notion` | Initiate Notion OAuth flow |
+| `GET` | `/auth/status` | Check connection status for all services |
+| `DELETE` | `/auth/revoke-all` | Revoke all tokens and disconnect everything |
+
+Interactive API docs: **`http://localhost:8000/docs`**
+
+---
+
+
+## 👤 Author
+
+**Eshaa Goyal** — [@Eshaagoyal](https://github.com/Eshaagoyal)
+
+---
