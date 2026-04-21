@@ -36,27 +36,23 @@ All powered by **Llama 3.1 via Groq** with **LangChain tool orchestration** — 
 
 ---
 
-## 🏗️ Architecture
-─────────────────────────────────────────────────────┐
-│                  User (Browser UI)                   │
-│               frontend/ (JS + CSS + HTML)            │
-└────────────────────────┬────────────────────────────┘
-│ HTTP
-┌────────────────────────▼────────────────────────────┐
-│              FastAPI Backend (Python)                │
-│                   backend/                           │
-│  ┌─────────────┐   ┌──────────────────────────────┐ │
-│  │ Orchestrator│   │   Auth Layer (OAuth2)         │ │
-│  │ (LangChain) │   │   Google + Notion             │ │
-│  └──────┬──────┘   └──────────────────────────────┘ │
-│         │ Tool Calls                                  │
-│  ┌──────▼───────────────────────────────────────┐   │
-│  │              Tool Registry                    │   │
-│  │  Gmail | Drive | Calendar | Notion | Local FS │   │
-│  └──────────────────────────────────────────────┘   │
-└────────────────────────┬────────────────────────────┘
-│ Question + Snippet Only
-┌────────────────────────▼────────────────────────────┐
-│                 Groq API (Cloud)                     │
-│            llama-3.1-8b-instant                      │
-└─────────────────────────────────────────────────────┘
+## 📁 Project Structure
+Omni-Copilot/
+├── backend/
+│   ├── auth/
+│   │   └── google_auth.py       # Gmail, Drive, Calendar OAuth + API calls
+│   ├── orchestrator.py          # LangChain agent + tool definitions
+│   └── main.py                  # FastAPI app entry point
+├── frontend/
+│   ├── index.html               # Chat UI
+│   ├── style.css                # Styling
+│   └── app.js                   # Frontend logic
+├── docs/                        # Setup guides and documentation
+├── scripts/                     # Utility and setup scripts
+├── config/
+│   ├── .env                     # API keys (gitignored)
+│   └── tokens/                  # Encrypted OAuth tokens (gitignored)
+├── requirements.txt
+├── test_groq.py                 # LangChain + Groq integration test
+├── test_gmail.py                # Gmail API integration test
+└── .gitignore
